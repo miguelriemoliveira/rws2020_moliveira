@@ -2,9 +2,11 @@
 
 Location: DEM, UA, Meeting room.
 
-20 February - 9h15-17h
-21 February - 9h15-13h
-27 February - 14h-17h
+   20 February - 9h15-17h
+   
+   21 February - 9h15-13h
+   
+   27 February - 14h-17h
 
 Check the [wiki](https://github.com/miguelriemoliveira/rws2020_moliveira/wiki) page for more information.
 
