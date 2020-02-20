@@ -32,6 +32,8 @@ class Player:
             'I am ' + self.player_name + ' and I am from this team ' + self.my_team + '. ' + self.prey_team + ' players are all going die!')
         rospy.loginfo('I am afraid of ' + str(self.hunters))
 
+    def makeAPlayCallBack(self):
+        print('Received message make a play ... ')
 
 def callback(msg):
     print("Recevied a message containing string " + msg.data)
