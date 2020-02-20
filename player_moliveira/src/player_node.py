@@ -55,6 +55,15 @@ class Player:
         # self.transform.rotation = Quaternion( q[0], q[1], q[2], q[3])
 
 
+        # self.transform.translation.x = 1
+        # self.transform.translation.y = 2
+        # self.transform.translation.z = 0
+        # self.transform.rotation.x = 0
+        # self.transform.rotation.y = 0
+        # self.transform.rotation.z = 0
+        # self.transform.rotation.w = 1
+
+
     def makeAPlayCallBack(self, msg):
 
         self.max_vel = msg.turtle
