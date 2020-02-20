@@ -42,6 +42,8 @@ class Player:
         rospy.Subscriber("make_a_play", MakeAPlay, self.makeAPlayCallBack)
         self.br = tf.TransformBroadcaster()
         self.transform = Transform()
+        self.transform.translation.x = 4
+        self.transform.translation.y = -4
 
     def makeAPlayCallBack(self, msg):
 
