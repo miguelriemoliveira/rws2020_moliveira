@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import rospy
+from rws2020_msgs.msg import MakeAPlay
 from std_msgs.msg import String
 
 
@@ -32,8 +33,12 @@ class Player:
             'I am ' + self.player_name + ' and I am from this team ' + self.my_team + '. ' + self.prey_team + ' players are all going die!')
         rospy.loginfo('I am afraid of ' + str(self.hunters))
 
-    def makeAPlayCallBack(self):
-        print('Received message make a play ... ')
+        # Subscribe make a play msg
+        rospy.Subscriber("make_a_play", MakeAPlay, self.makeAPlayCallBack)
+
+    def makeAPlayCallBack(self, msg):
+        self.max_vel = msg.turtle
+        print('Received message make a play ... my max velocity is ' + str(self.max_vel))
 
 def callback(msg):
     print("Recevied a message containing string " + msg.data)
@@ -43,10 +48,9 @@ def main():
     print("Hello player node!")
 
     rospy.init_node('moliveira', anonymous=False)
-
     player = Player('moliveira')
 
-    rospy.Subscriber("chatter", String, callback)
+    # rospy.Subscriber("chatter", String, callback)
     rospy.spin()
 
 
