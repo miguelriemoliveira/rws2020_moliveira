@@ -1,5 +1,9 @@
 #!/usr/bin/env python
+import math
+
 import rospy
+import tf
+from geometry_msgs.msg import Transform
 from rws2020_msgs.msg import MakeAPlay
 from std_msgs.msg import String
 
@@ -35,10 +39,28 @@ class Player:
 
         # Subscribe make a play msg
         rospy.Subscriber("make_a_play", MakeAPlay, self.makeAPlayCallBack)
+        self.br = tf.TransformBroadcaster()
+        self.transform = Transform()
 
     def makeAPlayCallBack(self, msg):
+
         self.max_vel = msg.turtle
+        self.max_angle = math.pi / 30
         print('Received message make a play ... my max velocity is ' + str(self.max_vel))
+
+        # Make a play
+        vel = self.max_vel  # full throttle
+        angle = self.max_angle
+
+        Tdeslocamento = Transform()
+        Tdeslocamento.rotation = tf.transformations.quaternion_from_euler(0, 0, angle)
+        Tdeslocamento.translation.x = vel
+
+        self.transform = self.transform * Tdeslocamento
+
+        self.br.sendTransform((1, 1, 0), tf.transformations.quaternion_from_euler(0, 0, angle), rospy.Time.now(),
+                              self.player_name, "world")
+
 
 def callback(msg):
     print("Recevied a message containing string " + msg.data)

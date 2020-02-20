@@ -70,30 +70,30 @@ if __name__ == "__main__":
     ###   Clone mode   ###
     # --------------------#
     if clone_mode:
-        print "*** Clone mode selected *** "
-        print "Cloning reps to path ../"
+        print("*** Clone mode selected *** ")
+        print("Cloning reps to path ../")
 
         for url in urls:
 
-            print url
+            print(url)
             name = url.split("/")[-1][:-4]
 
             files = sorted(glob.glob(path + name))
 
             if not len(files) == 0:
-                print "Repository " + name + " already exists in " + path + " , will not clone"
+                print("Repository " + name + " already exists in " + path + " , will not clone")
             else:
                 cmd = "cd " + path + " && git clone " + url
-                print "git clone " + url
+                print("git clone " + url)
                 p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 for line in p.stdout.readlines():
-                    print line,
+                    print(line, end=' ')
                     retval = p.wait()
 
 
     else:
 
-        print "pulling all reps from path ../"
+        print("pulling all reps from path ../")
 
         # List all reps, i.e., folders starting by rws2019
         rep_paths = sorted(
