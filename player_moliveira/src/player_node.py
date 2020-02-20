@@ -44,6 +44,7 @@ class Player:
         self.transform = Transform()
         self.transform.translation.x = 4
         self.transform.translation.y = -4
+        self.transform.translation.z = 0
 
     def makeAPlayCallBack(self, msg):
 
@@ -57,7 +58,7 @@ class Player:
 
 
 
-        self.move(self.transform, vel/10, angle)
+        self.move(self.transform, vel, angle)
 
     def move(self, transform_now, vel, angle):
 
@@ -102,7 +103,7 @@ class Player:
         self.transform.rotation = Quaternion(quat[0], quat[1], quat[2], quat[3])
         self.transform.translation.x = trans[0]
         self.transform.translation.y = trans[1]
-        self.transform.translation.z = trans[0]
+        self.transform.translation.z = trans[2]
 
         self.br.sendTransform(trans, quat, rospy.Time.now(),
                               self.player_name, "world")
