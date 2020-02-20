@@ -11,12 +11,11 @@ import roslaunch
 import rospy
 import numpy as np
 import pandas
+from rws2020_msgs.msg import MakeAPlay
 from visualization_msgs.msg import Marker
 from geometry_msgs.msg import Point
 from visualization_msgs.msg import MarkerArray
 from std_msgs.msg import String
-from rws2019_msgs.msg import MakeAPlay
-# from rws2018_msgs.srv import GameQuery
 import random
 import tf
 import math
@@ -44,7 +43,7 @@ class Player:
         self.num_preyed = 0
         self.score = 0
         self.package = 'player_' + self.name
-        self.executable = 'player_' + self.name + '_node'
+        self.executable = 'player_node.py'
         self.node = roslaunch.core.Node(self.package, self.executable, output=None, machine_name='')
         self.launch = roslaunch.scriptapi.ROSLaunch()
         self.launch.start()
@@ -55,11 +54,11 @@ class Player:
         Checks to which team a player belongs to
         :return: a String containing the name of the team
         """
-        if self.name in rospy.get_param('/team_red'):
+        if self.name in rospy.get_param('/red_team'):
             return 'red'
-        elif self.name in rospy.get_param('/team_green'):
+        elif self.name in rospy.get_param('/green_team'):
             return 'green'
-        elif self.name in rospy.get_param('/team_blue'):
+        elif self.name in rospy.get_param('/blue_team'):
             return 'blue'
 
     def resuscitate(self):
@@ -238,13 +237,13 @@ def gameQueryCallback(event):
     selected_object = random.choice(objects)
 
     rospack = rospkg.RosPack()
-    path_pcd = rospack.get_path('rws2019_referee') + "/pcd/"
+    path_pcd = rospack.get_path('rws2020_referee') + "/pcd/"
     file_pcd = path_pcd + selected_object + ".pcd"
     # print("vou ler o " + str(file_pcd))
 
     # pedir ao pcd2pointcloud para enviar o objeto
 
-    cmd = "rosrun rws2019_referee pcd2pointcloud _input:=" + file_pcd + " _output:=/object_point_cloud /world:=" + selected_player + " _one_shot:=1"
+    cmd = "rosrun rws2020_referee pcd2pointcloud _input:=" + file_pcd + " _output:=/object_point_cloud /world:=" + selected_player + " _one_shot:=1"
     # print "Executing command: " + cmd
     p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     for line in p.stdout.readlines():
@@ -777,9 +776,9 @@ if __name__ == '__main__':
     # -------------------------------------
     # Create players
     # -------------------------------------
-    team_red = rospy.get_param('/team_red')
-    team_green = rospy.get_param('/team_green')
-    team_blue = rospy.get_param('/team_blue')
+    team_red = rospy.get_param('/red_team')
+    team_green = rospy.get_param('/green_team')
+    team_blue = rospy.get_param('/blue_team')
     for player in team_red + team_green + team_blue:
         pinfo[player] = Player(player)
 
