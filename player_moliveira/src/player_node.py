@@ -34,7 +34,7 @@ class Player:
             exit(0)
 
 
-        rospy.logwarn('I am ' + self.player_name + ' and I am on team ' + self.my_team + '. ' + self.prey_team + ' players are all going die!')
+        rospy.logwarn('I am ' + self.player_name + ' and I am from this team ' + self.my_team + '. ' + self.prey_team + ' players are all going die!')
         rospy.loginfo('I am afraid of ' + str(self.hunters))
 
 def callback(msg):
