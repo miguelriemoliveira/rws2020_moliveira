@@ -53,9 +53,20 @@ class Player:
         vel = self.max_vel  # full throttle
         angle = self.max_angle
 
-        self.move(self.transform, vel, -angle)
+
+
+        self.move(self.transform, vel/10, angle)
 
     def move(self, transform_now, vel, angle):
+
+        if angle > self.max_angle:
+            angle = self.max_angle
+        elif angle < -self.max_angle:
+            angle = -self.max_angle
+
+        if vel > self.max_vel:
+            vel = self.max_vel
+
         T1 = transform_now
 
         T2 = Transform()
@@ -79,9 +90,9 @@ class Player:
                                                            T1.rotation.y,
                                                            T1.rotation.z,
                                                            T1.rotation.w))
-        matrix_transform = numpy.matmul(matrix_trans, matrix_rot)
+        matrixT1 = numpy.matmul(matrix_trans, matrix_rot)
 
-        matrix_new_transform = numpy.matmul(matrixT2, matrix_transform)
+        matrix_new_transform = numpy.matmul(matrixT2, matrixT1)
 
         quat = tf.transformations.quaternion_from_matrix(matrix_new_transform)
         trans = tf.transformations.translation_from_matrix(matrix_new_transform)
