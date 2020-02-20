@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 import math
 
+import numpy
 import rospy
 import tf
-from geometry_msgs.msg import Transform
+from geometry_msgs.msg import Transform, Quaternion
 from rws2020_msgs.msg import MakeAPlay
 from std_msgs.msg import String
 
@@ -52,13 +53,45 @@ class Player:
         vel = self.max_vel  # full throttle
         angle = self.max_angle
 
-        Tdeslocamento = Transform()
-        Tdeslocamento.rotation = tf.transformations.quaternion_from_euler(0, 0, angle)
-        Tdeslocamento.translation.x = vel
+        self.move(self.transform, vel, -angle)
 
-        self.transform = self.transform * Tdeslocamento
+    def move(self, transform_now, vel, angle):
+        T1 = transform_now
 
-        self.br.sendTransform((1, 1, 0), tf.transformations.quaternion_from_euler(0, 0, angle), rospy.Time.now(),
+        T2 = Transform()
+        T2.rotation = tf.transformations.quaternion_from_euler(0, 0, angle)
+        T2.translation.x = vel
+        matrix_trans = tf.transformations.translation_matrix((T2.translation.x,
+                                                              T2.translation.y,
+                                                              T2.translation.z))
+
+        matrix_rot = tf.transformations.quaternion_matrix((T2.rotation[0],
+                                                           T2.rotation[1],
+                                                           T2.rotation[2],
+                                                           T2.rotation[3]))
+        matrixT2 = numpy.matmul(matrix_trans, matrix_rot)
+
+        matrix_trans = tf.transformations.translation_matrix((T1.translation.x,
+                                                              T1.translation.y,
+                                                              T1.translation.z))
+
+        matrix_rot = tf.transformations.quaternion_matrix((T1.rotation.x,
+                                                           T1.rotation.y,
+                                                           T1.rotation.z,
+                                                           T1.rotation.w))
+        matrix_transform = numpy.matmul(matrix_trans, matrix_rot)
+
+        matrix_new_transform = numpy.matmul(matrixT2, matrix_transform)
+
+        quat = tf.transformations.quaternion_from_matrix(matrix_new_transform)
+        trans = tf.transformations.translation_from_matrix(matrix_new_transform)
+
+        self.transform.rotation = Quaternion(quat[0], quat[1], quat[2], quat[3])
+        self.transform.translation.x = trans[0]
+        self.transform.translation.y = trans[1]
+        self.transform.translation.z = trans[0]
+
+        self.br.sendTransform(trans, quat, rospy.Time.now(),
                               self.player_name, "world")
 
 

@@ -102,10 +102,10 @@ if __name__ == "__main__":
 
         for rep_path in rep_paths:
             cmd = "cd " + rep_path + " && git pull"
-            print "git pull " + rep_path
+            print("git pull " + rep_path)
             p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             for line in p.stdout.readlines():
-                print line,
+                print(line, end=' ')
                 retval = p.wait()
 
     sys.exit()
