@@ -34,7 +34,7 @@ __status__ = "Development"
 # Taken from https://github.com/miguelriemoliveira/rws2016_moliveira/wiki/List-of-players-and-teams
 urls = ["https://github.com/miguelriemoliveira/rws2020_moliveira",
 "https://github.com/joaofigueiredo22/rws2020_jfigueiredo",
-# "https://github.com/rubendfcosta/rws2020_rcosta",
+"https://github.com/rubendfcosta/rws2020_rdcosta",
 "https://github.com/DiogoF9/rws2020_dfigueiredo",
 "https://github.com/diegosaraivanunes/rws2020_dnunes",
 "https://github.com/dalmeida97/rws2020_dalmeida",
