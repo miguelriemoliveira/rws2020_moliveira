@@ -3,7 +3,7 @@ import random
 
 import math
 
-import numpy
+import numpy as np
 import rospy
 import tf
 from geometry_msgs.msg import Transform, Quaternion
@@ -99,7 +99,7 @@ class Player:
                                                            T2.rotation[1],
                                                            T2.rotation[2],
                                                            T2.rotation[3]))
-        matrixT2 = numpy.matmul(matrix_trans, matrix_rot)
+        matrixT2 = np.matmul(matrix_trans, matrix_rot)
 
         matrix_trans = tf.transformations.translation_matrix((T1.translation.x,
                                                               T1.translation.y,
@@ -109,9 +109,9 @@ class Player:
                                                            T1.rotation.y,
                                                            T1.rotation.z,
                                                            T1.rotation.w))
-        matrixT1 = numpy.matmul(matrix_trans, matrix_rot)
+        matrixT1 = np.matmul(matrix_trans, matrix_rot)
 
-        matrix_new_transform = numpy.matmul(matrixT2, matrixT1)
+        matrix_new_transform = np.matmul(matrixT2, matrixT1)
 
         quat = tf.transformations.quaternion_from_matrix(matrix_new_transform)
         trans = tf.transformations.translation_from_matrix(matrix_new_transform)
