@@ -121,9 +121,9 @@ class Player:
         self.m = Marker(ns=self.player_name, id=0, type=Marker.TEXT_VIEW_FACING, action=Marker.ADD)
         self.m.header.frame_id = "moliveira"
         self.m.header.stamp = rospy.Time.now()
-        self.m.pose.position.y = 0.5
+        self.m.pose.position.y = 1
         self.m.pose.orientation.w = 1.0
-        self.m.scale.z = 1.1
+        self.m.scale.z = 0.4
         self.m.color.a = 1.0
         self.m.color.r = 0.0
         self.m.color.g = 0.0
@@ -176,6 +176,7 @@ class Player:
             vel = max_vel  # full throttle
             rospy.loginfo(self.player_name + ': Hunting ' + str(target) + '(' + str(distance) + ' away)')
 
+            self.m.header.stamp = rospy.Time.now()
             self.m.text = 'Oh ' + target + ' tas tramado!'
             self.pub_bocas.publish(self.m)
         else:  # what else to do? Lets just move towards the center
@@ -185,6 +186,7 @@ class Player:
             rospy.loginfo(self.player_name + ': Moving to the center of the arena.')
             rospy.loginfo('I am ' + str(distance) + ' from ' + target)
 
+            self.m.header.stamp = rospy.Time.now()
             self.m.text = 'Nada para fazer.'
             self.pub_bocas.publish(self.m)
 
