@@ -305,7 +305,7 @@ def randomizeVelocityProfiles(event):
     dog_speed = random.random() / 10
     cat_speed = random.random() / 10
 
-    rospy.loginfo("killed players " + str(killed))
+    # rospy.loginfo("killed players " + str(killed))
 
 
 def makeAPlayCallback(event):
@@ -392,8 +392,8 @@ def getBestHunterAndSurvivor():
     if prey_values.count(minimum_num_preyed) > 1:
         best_survivor = None
 
-    print('best hunter is ' + str(best_hunter))
-    print('best survivor is ' + str(best_survivor))
+    # print('best hunter is ' + str(best_hunter))
+    # print('best survivor is ' + str(best_survivor))
 
 
 def gameEndCallback(event):
@@ -417,18 +417,18 @@ def gameEndCallback(event):
         score[team] += best_survivor_score
 
     if score['red'] > score['green'] and score['red'] > score['blue']:
-        text = "Final score: red=" + str(score['red']) + ', green: ' + str(score['green']) + ', ' + str(
+        text = "Final score: red=" + str(score['red']) + ', green: ' + str(score['green']) + ', blue: ' + str(
             score['blue']) + "\nTeam R wins the game"
     elif score['green'] > score['red'] and score['green'] > score['blue']:
         # text = "Team G wins the game"
-        text = "Final score: red=" + str(score['red']) + ', green: ' + str(score['green']) + ', ' + str(
+        text = "Final score: red=" + str(score['red']) + ', green: ' + str(score['green']) + ', blue: ' + str(
             score['blue']) + "\nTeam G wins the game"
     elif score['blue'] > score['red'] and score['blue'] > score['green']:
         # text = "Team B wins the game"
-        text = "Final score: red=" + str(score['red']) + ', green: ' + str(score['green']) + ', ' + str(
+        text = "Final score: red=" + str(score['red']) + ', green: ' + str(score['green']) + ', blue: ' + str(
             score['blue']) + "\nTeam B wins the game"
     else:
-        text = "Final score: red=" + str(score['red']) + ', green: ' + str(score['green']) + ', ' + str(
+        text = "Final score: red=" + str(score['red']) + ', green: ' + str(score['green']) + ', blue: ' + str(
             score['blue']) + "\nWHAT HAPPENNED???"
 
     table = []

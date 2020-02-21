@@ -15,7 +15,7 @@
 <!--  <node pkg="rws2020_referee" type="referee.py" name="referee" output="screen"/>-->
 
   <!--Launch the killer-->
-  <node pkg="rws2020_referee" type="killer.py" name="killer"/>
+<!--  <node pkg="rws2020_referee" type="killer.py" name="killer"/>-->
 
   <!-- Draw teams -->
 <!--  <node pkg="rws2020_referee" type="draw_teams" name="draw_teams"/>-->

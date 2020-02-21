@@ -1,8 +1,9 @@
-red_team: ["moliveira", "jfigueiredo", "sinacio"]
+red_team: ["moliveira"]
+green_team: ["dfigueiredo"]
+blue_team: ["tavila"]
+
 #red_team: ["moliveira", "jfigueiredo", "sinacio", "mgomes"]
 #green_team: ["dfigueiredo", "rdcosta", "rcosta", "dnunes"]
-green_team: ["dfigueiredo", "rdcosta", "rcosta"]
-blue_team: ["dnunes"]
 #blue_team: ["dalmeida", "fcurado", "tavila"]
 
 hunting_distance: 0.5
