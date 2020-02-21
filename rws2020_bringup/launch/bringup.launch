@@ -5,8 +5,6 @@
 
   <rosparam command="load" file="$(find rws2020_bringup)/param/params.yaml"/>
 
-<!--  <node name="moliveira" pkg="player_moliveira" type="player_node.py" respawn="false" output="screen" respawn_delay="$(arg delay)"/>-->
-
 
   <node pkg="rviz" type="rviz" name="rviz" args="--display-config $(find rws2020_bringup)/config/config.rviz" required="true"/>
 <!--  <node name="soundplay_node" pkg="sound_play" type="soundplay_node.py"/>-->

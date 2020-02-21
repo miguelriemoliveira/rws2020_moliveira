@@ -52,7 +52,11 @@ class Player:
 
         if msg.green_alive:  # PURSUIT MODE: Follow any green player (only if there is at least one green alive)
             target = msg.green_alive[0]  # select the first alive green player (I am hunting green)
-            distance, angle = getDistanceAndAngleToTarget(self.listener, self.player_name, target)
+            distance, angle = getDistanceAndAngleToTarget(self.listener,
+                                                          self.player_name, target)
+
+            if angle is None:
+                angle = 0;
             vel = max_vel  # full throttle
             rospy.loginfo(self.player_name + ': Hunting ' + str(target) + '(' + str(distance) + ' away)')
         else:  # what else to do? Lets just move towards the center

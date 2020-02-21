@@ -9,7 +9,8 @@ from geometry_msgs.msg import Transform, Quaternion
 import numpy as np
 
 
-def getDistanceAndAngleToTarget(tf_listener, my_name, target_name, time=rospy.Time(0), max_time_to_wait=1.0):
+def getDistanceAndAngleToTarget(tf_listener, my_name, target_name,
+                                time=rospy.Time(0), max_time_to_wait=1.0):
     try:
         tf_listener.waitForTransform(my_name, target_name, time, rospy.Duration(max_time_to_wait))
         (trans, rot) = tf_listener.lookupTransform(my_name, target_name, time)
