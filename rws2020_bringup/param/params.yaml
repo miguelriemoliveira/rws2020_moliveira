@@ -1,16 +1,16 @@
 #red_team: ["moliveira"]
 #green_team: ["dfigueiredo"]
 #blue_team: ["tavila"]
-red_team: ["moliveira", "jfigueiredo", "sinacio", "mgomes"]
-green_team: ["dfigueiredo", "rdcosta", "rcosta", "dnunes"]
-blue_team: ["tavila"]
+red_team: ["moliveira", "sinacio", "mgomes"]
+green_team: ["dfigueiredo", "rdcosta", "rcosta"]
+blue_team: ["tavila", "fcurado"]
 
 #red_team: ["moliveira", "jfigueiredo", "sinacio", "mgomes"]
 #green_team: ["dfigueiredo", "rdcosta", "rcosta", "dnunes"]
 #blue_team: ["dalmeida", "fcurado", "tavila"]
 
 hunting_distance: 0.5
-game_duration: 360
+game_duration: 80
 immunity_duration: 3
 killed_duration: 6
 positive_score: 1
