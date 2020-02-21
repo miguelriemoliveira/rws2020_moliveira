@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+import random
+
 import math
 
 import rospy
@@ -7,7 +9,34 @@ from geometry_msgs.msg import Transform, Quaternion
 import numpy as np
 
 
+def randomizePlayerPose(transform, arena_radius=8):
+    """
+    Randomizes the initial pose of a player. Based on the code by MGomes.
+    :param transform: a geometry_msgs.msg.Transform() which will have the values of x,y and yaw randomized.
+    :param arena_radius: the radius of the arena inside which the player can be positioned.
+    """
+    initial_r = arena_radius * random.random()
+    initial_theta = 2 * math.pi * random.random()
+    initial_x = initial_r * math.cos(initial_theta)
+    initial_y = initial_r * math.sin(initial_theta)
+    initial_rotation = 2 * math.pi * random.random()
+    transform.translation.x = initial_x
+    transform.translation.y = initial_y
+    q = tf.transformations.quaternion_from_euler(0, 0, initial_rotation)
+    transform.rotation = Quaternion(q[0], q[1], q[2], q[3])
+
+
 def movePlayer(tf_broadcaster, player_name, transform_now, vel, angle, max_vel):
+    """
+    Moves a player given its currrent pose, a velocity, and angle, and a maximum velocity
+    :param tf_broadcaster: Used to publish the new pose of the player
+    :param player_name:  string with the name of the player (must coincide with the name of the tf frame_id)
+    :param transform_now: a geometry_msgs.msg.Transform() containing the current pose. This variable is updated with
+                          the new player pose
+    :param vel: velocity of displacement to take in x axis
+    :param angle: angle to turn, limited by max_angle (pi/30)
+    :param max_vel: maximum velocity or displacement based on the selected animal
+    """
     max_angle = math.pi / 30
 
     if angle > max_angle:
