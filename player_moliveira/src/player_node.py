@@ -56,7 +56,7 @@ class Player:
                                                           self.player_name, target)
 
             if angle is None:
-                angle = 0;
+                angle = 0
             vel = max_vel  # full throttle
             rospy.loginfo(self.player_name + ': Hunting ' + str(target) + '(' + str(distance) + ' away)')
         else:  # what else to do? Lets just move towards the center
