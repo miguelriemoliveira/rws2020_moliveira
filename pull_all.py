@@ -87,7 +87,8 @@ if __name__ == "__main__":
                 print("git clone " + url)
                 p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
                 for line in p.stdout.readlines():
-                    print(line, end=' ')
+                    # print(line, end=' ')
+                    print(line)
                     retval = p.wait()
 
 
@@ -105,7 +106,8 @@ if __name__ == "__main__":
             print("git pull " + rep_path)
             p = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             for line in p.stdout.readlines():
-                print(line, end=' ')
+                # print(line, end=' ')
+                print(line)
                 retval = p.wait()
 
     sys.exit()
