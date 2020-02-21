@@ -9,6 +9,21 @@ from geometry_msgs.msg import Transform, Quaternion
 import numpy as np
 
 
+def getDistanceAndAngleToTarget(tf_listener, my_name, target_name, time=rospy.Time(0), max_time_to_wait=1.0):
+    try:
+        tf_listener.waitForTransform(my_name, target_name, time, rospy.Duration(max_time_to_wait))
+        (trans, rot) = tf_listener.lookupTransform(my_name, target_name, time)
+    except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException, tf.Exception):
+        rospy.logwarn(my_name + ': Could not get transform from ' + my_name + ' to ' + target_name)
+        return None, None
+
+    # compute distance and angle
+    x, y = trans[0], trans[1]
+    distance = math.sqrt(x ** 2 + y ** 2)
+    angle = math.atan2(y, x)
+    return distance, angle
+
+
 def randomizePlayerPose(transform, arena_radius=8):
     """
     Randomizes the initial pose of a player. Based on the code by MGomes.

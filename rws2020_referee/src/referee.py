@@ -44,7 +44,7 @@ class Player:
         self.score = 0
         self.package = 'player_' + self.name
         self.executable = 'player_node.py'
-        self.node = roslaunch.core.Node(self.package, self.executable, output=None, machine_name='')
+        self.node = roslaunch.core.Node(package=self.package, node_type=self.executable, name=self.name, output=None, machine_name='')
         self.launch = roslaunch.scriptapi.ROSLaunch()
         self.launch.start()
         self.process = None

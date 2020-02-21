@@ -8,7 +8,7 @@ import rospy
 import tf
 from geometry_msgs.msg import Transform, Quaternion
 from rws2020_msgs.msg import MakeAPlay
-from rws2020_lib.utils import movePlayer, randomizePlayerPose
+from rws2020_lib.utils import movePlayer, randomizePlayerPose, getDistanceAndAngleToTarget
 
 
 class Player:
@@ -16,6 +16,7 @@ class Player:
     def __init__(self, player_name):
 
         self.player_name = player_name
+        self.listener = tf.TransformListener()
 
         red_team = rospy.get_param('/red_team')
         green_team = rospy.get_param('/green_team')
@@ -37,88 +38,37 @@ class Player:
             rospy.logerr('My name is not in any team. I want to play!')
             exit(0)
 
-        rospy.logwarn(
-            'I am ' + self.player_name + ' and I am from this team ' + self.my_team + '. ' + self.prey_team + ' players are all going die!')
-        rospy.loginfo('I am afraid of ' + str(self.hunters))
+        rospy.logwarn(self.player_name + ' starting to play ... be very afraid!!!')
 
-        # Subscribe make a play msg
-        rospy.Subscriber("make_a_play", MakeAPlay, self.makeAPlayCallBack)
         self.br = tf.TransformBroadcaster()
         self.transform = Transform()
         randomizePlayerPose(self.transform)
 
+        rospy.Subscriber("make_a_play", MakeAPlay, self.makeAPlayCallBack)  # Subscribe make a play msg
+
     def makeAPlayCallBack(self, msg):
 
-        max_vel = msg.turtle
-        max_angle = math.pi / 30
-        print('Received message make a play ... my max velocity is ' + str(max_vel))
+        max_vel, max_angle = msg.turtle,  math.pi / 30
 
-        # Make a play
-        vel = max_vel  # full throttle
-        angle = max_angle
-        angle = 0
+        if msg.green_alive:  # PURSUIT MODE: Follow any green player (only if there is at least one green alive)
+            target = msg.green_alive[0]  # select the first alive green player (I am hunting green)
+            distance, angle = getDistanceAndAngleToTarget(self.listener, self.player_name, target)
+            vel = max_vel  # full throttle
+            rospy.loginfo(self.player_name + ': Hunting ' + str(target) + '(' + str(distance) + ' away)')
+        else:  # what else to do? Lets just move towards the center
+            target = 'world'
+            distance, angle = getDistanceAndAngleToTarget(self.listener, self.player_name, target)
+            vel = max_vel  # full throttle
+            rospy.loginfo(self.player_name + ': Moving to the center of the arena.')
+            rospy.loginfo('I am ' + str(distance) + ' from ' + target)
 
+        # Actually move the player
         movePlayer(self.br, self.player_name, self.transform, vel, angle, max_vel)
-
-    # def move(self, transform_now, vel, angle):
-    #
-    #     if angle > self.max_angle:
-    #         angle = self.max_angle
-    #     elif angle < -self.max_angle:
-    #         angle = -self.max_angle
-    #
-    #     if vel > self.max_vel:
-    #         vel = self.max_vel
-    #
-    #     T1 = transform_now
-    #
-    #     T2 = Transform()
-    #     T2.rotation = tf.transformations.quaternion_from_euler(0, 0, angle)
-    #     T2.translation.x = vel
-    #     matrix_trans = tf.transformations.translation_matrix((T2.translation.x,
-    #                                                           T2.translation.y,
-    #                                                           T2.translation.z))
-    #
-    #     matrix_rot = tf.transformations.quaternion_matrix((T2.rotation[0],
-    #                                                        T2.rotation[1],
-    #                                                        T2.rotation[2],
-    #                                                        T2.rotation[3]))
-    #     matrixT2 = np.matmul(matrix_trans, matrix_rot)
-    #
-    #     matrix_trans = tf.transformations.translation_matrix((T1.translation.x,
-    #                                                           T1.translation.y,
-    #                                                           T1.translation.z))
-    #
-    #     matrix_rot = tf.transformations.quaternion_matrix((T1.rotation.x,
-    #                                                        T1.rotation.y,
-    #                                                        T1.rotation.z,
-    #                                                        T1.rotation.w))
-    #     matrixT1 = np.matmul(matrix_trans, matrix_rot)
-    #
-    #     matrix_new_transform = np.matmul(matrixT1, matrixT2)
-    #
-    #     quat = tf.transformations.quaternion_from_matrix(matrix_new_transform)
-    #     trans = tf.transformations.translation_from_matrix(matrix_new_transform)
-    #
-    #     T1.rotation = Quaternion(quat[0], quat[1], quat[2], quat[3])
-    #     T1.translation.x = trans[0]
-    #     T1.translation.y = trans[1]
-    #     T1.translation.z = trans[2]
-    #
-    #     self.br.sendTransform(trans, quat, rospy.Time.now(), self.player_name, "world")
-
-
-def callback(msg):
-    print("Recevied a message containing string " + msg.data)
 
 
 def main():
-    print("Hello player node!")
-
     rospy.init_node('moliveira', anonymous=False)
     player = Player('moliveira')
-
-    # rospy.Subscriber("chatter", String, callback)
     rospy.spin()
 
 
