@@ -161,6 +161,11 @@ class Player:
         randomizePlayerPose(self.transform)
 
         rospy.Subscriber("make_a_play", MakeAPlay, self.makeAPlayCallBack)  # Subscribe make a play msg
+        from rws2020_msgs.srv import Warp, WarpResponse
+        self.warp_server = rospy.Service('warp', Warp, self.warpServiceCallback) # start the server
+
+    def warpServiceCallback(self, req):
+        rospy.loginfo("someone called the service for " + req.player)
 
     def makeAPlayCallBack(self, msg):
 
