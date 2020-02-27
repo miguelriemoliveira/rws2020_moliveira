@@ -79,7 +79,9 @@ Visualization Manager:
       Marker Topic: /player_info
       Name: PlayerInfoMarkerArray
       Namespaces:
+        dalmeida: true
         dfigueiredo: true
+        dnunes: true
         fcurado: true
         mgomes: true
         moliveira: true
@@ -105,7 +107,6 @@ Visualization Manager:
         "": true
         best_hunter: true
         best_survivor: true
-        suicidals: true
       Queue Size: 100
       Value: true
     - Class: rviz/MarkerArray
@@ -113,12 +114,16 @@ Visualization Manager:
       Marker Topic: /kill_markers
       Name: KillMarkerArray
       Namespaces:
+        dalmeida: true
         dfigueiredo: true
+        dnunes: true
         fcurado: true
         mgomes: true
         moliveira: true
+        rcosta: true
         rdcosta: true
         sinacio: true
+        tavila: true
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -126,7 +131,16 @@ Visualization Manager:
       Marker Topic: /bocas
       Name: BocasMarker
       Namespaces:
+        dalmeida: true
+        dfigueiredo: true
+        dnunes: true
+        fcurado: true
+        mgomes: true
         moliveira: true
+        rcosta: true
+        rdcosta: true
+        sinacio: true
+        tavila: true
       Queue Size: 100
       Value: true
   Enabled: true

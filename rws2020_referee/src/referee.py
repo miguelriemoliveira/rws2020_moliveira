@@ -33,8 +33,8 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.team = self.checkTeam()
-        self.x = random.random() * 1000 + 5000
-        self.y = random.random() * 1000 + 5000
+        self.x = random.random() * 8 - 4
+        self.y = random.random() * 8 - 4
         self.rot = (0, 0, 0, 1)
         self.stamp_last_pose = None
         self.stamp_resuscitated = rospy.Time.now()

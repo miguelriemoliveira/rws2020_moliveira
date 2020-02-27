@@ -2,8 +2,8 @@
 #green_team: ["dfigueiredo"]
 #blue_team: ["tavila"]
 red_team: ["moliveira", "sinacio", "mgomes"]
-green_team: ["dfigueiredo", "rdcosta", "rcosta"]
-blue_team: ["tavila", "fcurado"]
+green_team: ["dfigueiredo", "rdcosta", "rcosta", "dnunes"]
+blue_team: ["tavila", "fcurado", "dalmeida"]
 
 #red_team: ["moliveira", "jfigueiredo", "sinacio", "mgomes"]
 #green_team: ["dfigueiredo", "rdcosta", "rcosta", "dnunes"]
