@@ -10,6 +10,8 @@ Location: DEM, UA, Meeting room.
 
 Check the [wiki](https://github.com/miguelriemoliveira/rws2020_moliveira/wiki) page for more information.
 
+![docs/snapshot03.png](docs/snapshot03.png?raw=true "Reconstructed point cloud of participants. ")
+
 ![docs/arena.png](docs/arena.png?raw=true "Game arena")
 
 ![docs/score.png](docs/score.png?raw=true "Game arena")
